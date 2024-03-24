@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage{tabularx}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{array}
+\usepackage{mathtools}
+\usepackage{tabularx}
+\usepackage{hhline}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{titlesec}
+
+
+\geometry{
+    top=25mm,
+    bottom=25mm,
+    left=25mm,
+    right=25mm
+}
+
+
+\renewcommand\tabularxcolumn[1]{m{#1}}
+\renewcommand{\arraystretch}{1.4}
+
+
+
+\begin{document}
+
+
+\section*{1. úloha}
+
+\noindent \textbf{Definice 1.0} Nechť $\mathnormal{H}_1: \mathbb{R} \to \{0, 1\}$ je Heavisideova funkce definovaná
+\[
+    \mathnormal{H}_1(x) = 
+    \begin{dcases}
+        \,0 & \text{iff}\quad x \in \left]-\infty, 0 \right] \\
+        \,1 & \text{iff}\quad x \in \left[0,\infty \right[ \\
+    \end{dcases}
+    .
+\]
+
+\vspace{0.5em}
+\noindent \textbf{Definice 1.1} Označme $\Theta_{a, b}: \mathbb{R} \to \{0, 1\}$, kde  $a,b \in \mathbb{R}$ přičemž
+\[
+    \Theta_{a, b}(x) = \mathnormal{H}_1(x-a) - \mathnormal{H}_1(x-b).
+\]
+Alternativně budeme zapisovat pomocí intervalu $I\subset\mathbb{R}$
+\[
+    \Theta_I(x) = 
+    \begin{dcases}
+        \,1 & \text{iff}\quad x \in I \\
+        \,0 & \text{iff}\quad x \in \mathbb{R}\setminus I \\
+    \end{dcases}.
+\]
+
+\vspace{0.5em}
+\noindent \textbf{Zadání 1.0} Nechť $s_1, s_2: \mathbb{R} \to \mathbb{C}$ jsou zadané předpisy
+\begin{align*}
+    s_1(t) &\coloneqq A \Theta_{-\frac{T_1}{4}, \frac{T_1}{4}}(t), \\
+    s_2(t) &\coloneqq A \Theta_{-\frac{T_1}{4}, \frac{T_1}{4}}(t) \cos\left(\frac{2\pi}{T_1}t\right),
+\end{align*}
+pro $A \in \mathbb{C}$ a $T_1\in \mathbb{R^{+}}$. Spočtěte  $\mathcal{R}[s_1, s_2](\tau)$.
+\vspace{0.5em}
+
+\noindent \textbf{Řešení}
+\begin{align*}
+    \mathcal{R}[s_1, s_2](\tau) = \langle s_1(t + \tau), s_2(t)\rangle_{\mathcal{H}} = \int_{\mathbb{R}} s_1(t+\tau)s_2^{*}(t)\,\mathrm{d}t.
+\end{align*}
+Nyní zkonstruujeme disjunktní dělení množiny $\mathbb{R}$
+\[
+    \mathfrak{D} = \{I_1, I_2, I_3, I_4\},
+\]
+kde $I_1 = \left]-\infty, \frac{T_1}{2}\right]$, $I_2 = \left]-\frac{T_1}{2}, 0\right]$, $I_3 = \left]0, \frac{T_1}{2}\right]$ a $I_4 = \left]\frac{T_1}{2}, \infty\right[$. Autokorelační funkci můžeme rozepsat
+\begin{align*}
+    \mathcal{R}[s_1, s_2](\tau) &= \left(\sum_{I \in \mathfrak{D}} \Theta_{I} \int_{I}\right)s_1(t + \tau)s_2^{*}(t) \,\mathrm{d}t = \\ &= \Theta_{I_1} \cdot 0 + \Theta_{I_1} \int_{I_2} A A^{*} \cos\left(\frac{2 \pi}{T_1} t\right)\,\mathrm{d}t + \Theta_{I_3} \int_{I_3} A A^{*} \cos\left(\frac{2 \pi}{T_1} t\right)\,\mathrm{d}t + \Theta_{I_4} \cdot 0 = \\ &= \Theta_{I_2}\frac{|A|^2 T_1}{2\pi}\left(1 + \cos\left(\frac{2\pi}{T_1} t\right)\right) + \Theta_{I_3}\frac{|A|^2 T_1}{2\pi}\left(1 + \cos\left(\frac{2\pi}{T_1} t\right)\right) = \\ &= \Theta_{I_2\cup I_3} \frac{|A|^2 T_1}{2\pi}\left(1 + \cos\left(\frac{2\pi}{T_1} t\right)\right) = \\ &= \Theta_{\frac{-T_1}{2}, \frac{T_1}{2}} \frac{|A|^2 T_1}{\pi} \cos^2\left(\frac{\pi}{T_1}t \right).
+\end{align*}
+
+\vspace{0.5em}
+\noindent \textbf{Zadání 1.1} Spočtěte energie $s_1$ a $s_2$ ze zadání 1.0 a také jejich vzájemnou energii.
+
+\vspace{0.5em}
+\noindent\textbf{Řešení}
+\[
+    E[s_1] = \langle s_1, s_1 \rangle_{\mathcal{H}} = \int_{\mathbb{R}}s_1(t) s_1^{*}(t)\,\mathrm{d}t = \int_{-\frac{T_1}{4}}^{\frac{T_1}{4}} |A|^2 \,\mathrm{d}t = \frac{|A|^2T_1}{2}.
+\]
+\[
+    E[s_2] = \langle s_2, s_2 \rangle_{\mathcal{H}} = \int_{\mathbb{R}}s_2(t) s_2^{*}(t)\,\mathrm{d}t = \int_{-\frac{T_1}{4}}^{\frac{T_1}{4}} |A|^2 \cos^2\left(\frac{2\pi}{T_1} t \right) \,\mathrm{d}t = \frac{|A|^2}{2} \int_{-\frac{T_1}{4}}^{\frac{T_1}{4}} 1 + \cos\left(\frac{4\pi}{T_1}t \right)\,\mathrm{d}t = \frac{|A|^2T_1}{4}.
+\]
+
+\newpage
+
+\[
+    E[s_1, s_2] = \langle s_1, s_2 \rangle_{\mathcal{H}} = \int_{\mathbb{R}}s_1(t) s_2^{*}(t)\,\mathrm{d}t =|A|^2 \int_{-\frac{T_1}{4}}^{\frac{T_1}{4}} \cos\left( \frac{2\pi}{T_1}t\right)\,\mathrm{d}t = \frac{|A|^2T_1}{\pi}.
+\]
+
+\section*{2. úloha}
+\end{document}
